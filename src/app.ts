@@ -1,11 +1,9 @@
 var express = require('express');
 var { graphqlHTTP } = require('express-graphql');
 
-import schema from "./schema/schemaUsers";
-import root from './routes/rootUsers';
+import schema from "./schema/schema";
+import root from './routes/UsersRoot';
 
-
-const port = 4000
 
 var app = express();
 app.use('/graphql', graphqlHTTP({
@@ -13,6 +11,6 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
-app.listen(port, () => {
-  console.log('Running a GraphQL API server at localhost:&{port}/graphql');
+app.listen(4000, () => {
+  console.log('Running a GraphQL API server at localhost:4000/graphql');
 });

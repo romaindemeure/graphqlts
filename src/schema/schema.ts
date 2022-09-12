@@ -1,17 +1,16 @@
-import { buildSchema } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 
 import User from './schemaUsers'
 
-var schema = buildSchema(`
+var Endpoints = `
   type Query {
     getUser(id: ID!): User
     getUsers: [User]
   }
-`);
+`;
 
 var schema = makeExecutableSchema({
-  typeDefs: [ User ]
+  typeDefs: [ Endpoints, User ]
 })
 
 export default schema;
