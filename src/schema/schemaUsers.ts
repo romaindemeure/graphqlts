@@ -1,5 +1,3 @@
-var { buildSchema } = require('graphql');
-
 export default `
   input UserInput {
     first_name: String

@@ -1,39 +1,45 @@
 var express = require('express');
 var { graphqlHTTP } = require('express-graphql');
 var { buildSchema } = require('graphql');
+import { v4 as uuidv4 } from 'uuid';
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
-  input MessageInput {
-    content: String
-    author: String
+  input UserInput {
+    first_name: String
+    last_name: String
+    email: String
   }
 
-  type Message {
+  type User {
     id: ID!
-    content: String
-    author: String
+    first_name: String
+    last_name: String
+    email: String
   }
 
   type Query {
-    getMessage(id: ID!): Message
+    getUser(id: ID!): User
+    getUsers: [User]
   }
 
   type Mutation {
-    createMessage(input: MessageInput): Message
-    updateMessage(id: ID!, input: MessageInput): Message
+    createUser(input: UserInput): User
+    updateUser(id: ID!, input: UserInput): User
   }
 `);
 
-// If Message had any complex fields, we'd put them on this object.
-class Message {
+// If User had any complex fields, we'd put them on this object.
+class User {
   id: string
-  content: string
-  author: string
-  constructor(id: string, {content, author}: {content: any, author: any}) {
+  first_name: string
+  last_name: string
+  email: string
+  constructor(id: string, {first_name, last_name, email}: {first_name: any, last_name: any, email: any}) {
     this.id = id;
-    this.content = content;
-    this.author = author;
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.email = email;
   }
 }
 
@@ -41,27 +47,37 @@ class Message {
 var fakeDatabase: (any) = {};
 
 var root = {
-  getMessage: ({id}: {id: string}) => {
-    console.log(fakeDatabase)
+  getUser: ({id}: {id: string}) => {
     if (!fakeDatabase[id]) {
-      throw new Error('no message exists with id ' + id);
+      throw new Error('no User exists with id ' + id);
     }
-    return new Message(id, fakeDatabase[id]);
+    const userRes = new User(id, fakeDatabase[id]);
+    // userRes.id = id;
+    // console.log(userRes)
+    return userRes;
   },
-  createMessage: ({input}: {input: any}) => {
+  getUsers: () => {
+    let Users= [];
+    for(const key in fakeDatabase) {
+      fakeDatabase[key].id = key;
+      Users.push(fakeDatabase[key])
+    }
+    return Users;
+  },
+  createUser: ({input}: {input: any}) => {
     // Create a random id for our "database".
-    var id = require('crypto').randomBytes(10).toString('hex');
+    var id = uuidv4();
 
     fakeDatabase[id] = input;
-    return new Message(id, input);
+    return new User(id, input);
   },
-  updateMessage: ({id, input}: {id: string, input: any}) => {
+  updateUser: ({id, input}: {id: string, input: any}) => {
     if (!fakeDatabase[id]) {
-      throw new Error('no message exists with id ' + id);
+      throw new Error('no User exists with id ' + id);
     }
     // This replaces all old data, but some apps might want partial update.
     fakeDatabase[id] = input;
-    return new Message(id, input);
+    return new User(id, input);
   },
 };
 
