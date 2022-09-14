@@ -1,0 +1,37 @@
+# docker run -p 27017:27017 mongoDB
+# docker run --name some-mongo -v /my/own/datadir:/data/db -d mongo
+
+# docker compose up
+# docker exec -it ID bash
+# mongosh -u root -p example
+# http://localhost:8081/db/graphqlts/
+# creer database "graphqlts"
+# use graphqlts
+# db.createUser({user: "backend", pwd: "backend", roles: ["readWrite"]})
+volumes:
+  datadb:
+
+services:
+
+  mongo:
+    ports:
+      - 27017:27017
+    image: mongo
+    restart: always
+    volumes:
+      - datadb:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      # ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_SERVER: mongo

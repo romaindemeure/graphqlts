@@ -1,40 +1,49 @@
 import UserController from "../controller/UserController";
 
 import { v4 as uuidv4 } from 'uuid';
+import { User } from "../entity/User";
 
-var fakeDatabase: (any) = {};
+const controller = new UserController;
 
-var root = {
-  getUser: ({ id }: { id: string }) => {
-    if (!fakeDatabase[id]) {
-      throw new Error('no User exists with id ' + id);
-    }
-    const userRes = new UserController(id, fakeDatabase[id]);
-    return userRes;
-  },
-  getUsers: () => {
-    let Users = [];
-    for (const key in fakeDatabase) {
-      fakeDatabase[key].id = key;
-      Users.push(fakeDatabase[key])
-    }
-    return Users;
-  },
-  createUser: ({ input }: { input: any }) => {
-    // Create a random id for our "database".
-    var id = uuidv4();
+interface UserInput {
+  id: number
+  email: string
+  first_name: string
+  last_name: string
+}
 
-    fakeDatabase[id] = input;
-    return new UserController(id, input);
+const root = {
+  // getUser: ({ id }: { id: string }) => {
+  //   if (!fakeDatabase[id]) {
+  //     throw new Error('no User exists with id ' + id);
+  //   }
+  //   const userRes = new UserController(id, fakeDatabase[id]);
+  //   return userRes;
+  // },
+  // getUsers: () => {
+  //   let Users = [];
+  //   for (const key in fakeDatabase) {
+  //     fakeDatabase[key].id = key;
+  //     Users.push(fakeDatabase[key])
+  //   }
+  //   return Users;
+  // },
+  createUser: async ({ input }: { input: UserInput }) => {
+    const user = new User();
+    user.email = input.email;
+    user.first_name = input.first_name;
+    user.last_name = input.last_name;
+    await controller.create(user).catch(console.log);
+    return user;
   },
-  updateUser: ({ id, input }: { id: string, input: any }) => {
-    if (!fakeDatabase[id]) {
-      throw new Error('no User exists with id ' + id);
-    }
-    // This replaces all old data, but some apps might want partial update.
-    fakeDatabase[id] = input;
-    return new UserController(id, input);
-  },
+  // updateUser: ({ id, input }: { id: string, input: any }) => {
+  //   if (!fakeDatabase[id]) {
+  //     throw new Error('no User exists with id ' + id);
+  //   }
+  //   // This replaces all old data, but some apps might want partial update.
+  //   fakeDatabase[id] = input;
+  //   return new UserController(id, input);
+  // },
 };
 
 export default root;
