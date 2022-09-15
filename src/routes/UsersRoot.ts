@@ -1,14 +1,4 @@
 import UserController from "../controller/UserController";
-import { User } from "../entity/User";
-
-const controller = new UserController;
-
-interface UserInput {
-  id: number
-  email: string
-  first_name: string
-  last_name: string
-}
 
 const root = {
   // getUser: ({ id }: { id: string }) => {
