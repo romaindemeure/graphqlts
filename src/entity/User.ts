@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ObjectIdColumn } from "typeorm"
+import { Entity, Column, ObjectID, ObjectIdColumn } from "typeorm"
 
 @Entity()
 export class User {

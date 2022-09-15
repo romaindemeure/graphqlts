@@ -4,6 +4,7 @@
 //     "outDir": "./dist",
 //     "noEmitOnError": true,
 //     "strict": true,
+//     "emitDecoratorMetadata": true,
 //     "experimentalDecorators": true,
 //   },
 //   "files":[

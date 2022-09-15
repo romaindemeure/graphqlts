@@ -26,14 +26,18 @@ const root = {
   //   }
   //   return Users;
   // },
-  createUser: async ({ input }: { input: UserInput }) => {
-    const user = new User();
-    user.email = input.email;
-    user.first_name = input.first_name;
-    user.last_name = input.last_name;
-    await controller.create(user).catch(console.log);
-    return user;
-  },
+  // createUserr: async ({ input }: { input: UserInput }) => {
+  //   const user = new User();
+  //   user.email = input.email;
+  //   user.first_name = input.first_name;
+  //   user.last_name = input.last_name;
+  //   await controller.create(user).catch(console.log);
+  //   return user;
+  // },
+  createUser: async (obj) => {
+    let value = UserController.createUser(obj);
+    return value
+  }
   // updateUser: ({ id, input }: { id: string, input: any }) => {
   //   if (!fakeDatabase[id]) {
   //     throw new Error('no User exists with id ' + id);

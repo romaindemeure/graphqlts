@@ -1,6 +1,13 @@
-import { v4 as uuidv4 } from 'uuid';
+import { create } from 'domain';
 import db from '../config/config';
 import { User } from '../entity/User';
+
+interface UserInput {
+  id: number
+  email: string
+  first_name: string
+  last_name: string
+}
 
 class UserController {
   // id: string
@@ -25,8 +32,19 @@ class UserController {
   // static last_name = async (last_name) => {
   //   return last_name.toLocaleLowerCase()
   // }
-  async create(u: User) {
-    await db.manager.save(u);
+  
+  // async create(u: User) {
+  //   await db.manager.save(u);
+  // }
+
+  static createUser({ input }: { input: UserInput }) {
+    const user = new User();
+    user.email = input.email;
+    user.first_name = input.first_name;
+    user.last_name = input.last_name;
+    create()
+    db.manager.save(user)
+    return user;
   }
 }
 
