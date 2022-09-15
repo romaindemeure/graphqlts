@@ -3,7 +3,7 @@ var { graphqlHTTP } = require('express-graphql');
 
 import schema from "./schema/schema";
 import root from './routes/UsersRoot';
-import db from './db/mongo';
+import db from './config/config';
 
 (async () => {
   await db.initialize();

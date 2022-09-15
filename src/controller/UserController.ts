@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import db from '../db/mongo';
+import db from '../config/config';
 import { User } from '../entity/User';
 
 class UserController {
