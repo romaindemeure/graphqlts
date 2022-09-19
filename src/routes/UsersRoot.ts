@@ -27,6 +27,10 @@ const root = {
   createUser: async (obj) => {
     let value = UserController.createUser(obj);
     return value
+  },
+  getUser: async (id) => {
+    let value = UserController.getUser(id);
+    return value
   }
   // updateUser: ({ id, input }: { id: string, input: any }) => {
   //   if (!fakeDatabase[id]) {

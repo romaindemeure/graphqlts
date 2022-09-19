@@ -4,7 +4,7 @@ import User from './schemaUsers'
 
 var Endpoints = `
   type Query {
-    getUser(id: ID!): User
+    getUser(first_name: ID!): User
     getUsers: [User]
   }
 `;
