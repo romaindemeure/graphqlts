@@ -22,5 +22,6 @@ export default `
 
   type Mutation {
     createUser(input: UserInput): User
+    deleteUserById(_id: ID!): User
   }
 `

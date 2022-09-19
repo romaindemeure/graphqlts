@@ -5,6 +5,7 @@ import User from './schemaUsers'
 // GraphQL creation of schema for my endpoint API
 var Endpoints = `
   type Query {
+    getUserById(_id: String): User
     getUserByEmail(email: String): User
     getUsers: [User]
   }

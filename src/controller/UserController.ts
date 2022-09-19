@@ -2,6 +2,7 @@ import { create } from 'domain';
 import db from '../config/config';
 import { User } from '../entity/User';
 import { v4 as uuidv4 } from 'uuid';
+import myDataSource from '../config/config';
 
 interface UserInput {
   _id: string
@@ -36,6 +37,21 @@ class UserController {
     return user
   };
 
+  static getUserById = async (_id: string) => {
+    let user = await db.manager.findOneBy(User, {
+      _id: _id
+    })
+    return user
+  }
+
+  static deleteUserById = async (_id: string) => {
+    let user = await myDataSource.getMongoRepository(User).deleteOne({
+      _id: { $eq: _id },
+    })
+    return user
+  }
+
+  
 }
 
 export default UserController;
