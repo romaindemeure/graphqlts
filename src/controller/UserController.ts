@@ -10,6 +10,7 @@ interface UserInput {
 
 class UserController {
 
+  // Todo: Use DTO (automapper) instead of faire tout à la mimine
   static createUser = async ({ input }: { input: UserInput }) => {
     const user = new User();
     user.email = input.email;
@@ -20,14 +21,11 @@ class UserController {
     return user;
   };
 
-  static getUser = async (first_name) => {
+  static getUser = async (first_name: string) => {
     console.log(first_name)
-    const user = await db.manager.getMongoRepository(User).find({
-      where: {
-        firstName: { $eq: "romain" },
-      },
+    let user = await db.manager.findOneBy(User, {
+      first_name: first_name
     })
-    console.log(user)
     return user
   };
 
