@@ -45,12 +45,28 @@ class UserController {
   }
 
   static deleteUserById = async (_id: string) => {
-    let user = await myDataSource.getMongoRepository(User).deleteOne({
+    await myDataSource.getMongoRepository(User).deleteOne({
       _id: { $eq: _id },
     })
-    return user
   }
 
+  static deleteUserByEmail = async (email: string) => {
+    await myDataSource.getMongoRepository(User).deleteOne({
+      email: { $eq: email },
+    })
+  }
+
+  static updateUserById = async (_id: string, { input }: { input: UserInput }) => {
+    await myDataSource.getMongoRepository(User).updateMany({'_id': _id}, 
+    {
+      'first_name': input.first_name,
+      'last_name': input.last_name,
+      'email': input.email,
+      'description': input.description,
+      'update_at': Date.now().toString()
+    })
+
+  }
   
 }
 

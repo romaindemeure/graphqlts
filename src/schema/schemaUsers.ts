@@ -22,6 +22,8 @@ export default `
 
   type Mutation {
     createUser(input: UserInput): User
-    deleteUserById(_id: ID!): User
+    deleteUserById(_id: String): User
+    deleteUserByEmail(email: String): User
+    updateUserById(_id: String, input: UserInput): User
   }
 `

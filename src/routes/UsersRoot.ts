@@ -39,6 +39,14 @@ const root = {
   deleteUserById: async(obj) => {
     let value = UserController.deleteUserById(obj._id);
     return value
+  },
+  deleteUserByEmail: async(obj) => {
+    let value = UserController.deleteUserByEmail(obj.email);
+    return value
+  },
+  updateUserById: async (obj, args) => {
+    let value = UserController.updateUserById(obj._id, args);
+    return value
   }
   // updateUser: ({ id, input }: { id: string, input: any }) => {
   //   if (!fakeDatabase[id]) {
