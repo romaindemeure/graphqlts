@@ -22,13 +22,15 @@ class UserController {
 
   static getUser = async (first_name) => {
     console.log(first_name)
-    const user = await db.manager.findOneBy(User, {
-      first_name: first_name,
+    const user = await db.manager.getMongoRepository(User).find({
+      where: {
+        firstName: { $eq: "romain" },
+      },
     })
     console.log(user)
     return user
   };
-  
+
 }
 
 export default UserController;
