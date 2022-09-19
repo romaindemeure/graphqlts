@@ -28,8 +28,8 @@ const root = {
     let value = UserController.createUser(obj);
     return value
   },
-  getUser: async (id) => {
-    let value = UserController.getUser(id);
+  getUser: async (first_name) => {
+    let value = UserController.getUser(first_name);
     return value
   }
   // updateUser: ({ id, input }: { id: string, input: any }) => {

@@ -9,6 +9,7 @@ interface UserInput {
 }
 
 class UserController {
+
   static createUser = async ({ input }: { input: UserInput }) => {
     const user = new User();
     user.email = input.email;
@@ -18,14 +19,16 @@ class UserController {
     db.manager.save(user)
     return user;
   };
+
   static getUser = async (first_name) => {
     console.log(first_name)
     const user = await db.manager.findOneBy(User, {
       first_name: first_name,
-  })
-  console.log(user)
-  return user
+    })
+    console.log(user)
+    return user
   };
+  
 }
 
 export default UserController;

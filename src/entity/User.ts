@@ -6,12 +6,12 @@ export class User {
     @ObjectIdColumn()
     id: ObjectID
 
-    @Column("text")
+    @Column()
     first_name: string
 
-    @Column("text")
+    @Column()
     last_name: string
 
-    @Column("text")
+    @Column()
     email: string
 }
