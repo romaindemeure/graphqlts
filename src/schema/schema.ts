@@ -4,7 +4,7 @@ import User from './schemaUsers'
 
 var Endpoints = `
   type Query {
-    getUser(first_name: String): User
+    getUserByEmail(email: String): User
     getUsers: [User]
   }
 `;

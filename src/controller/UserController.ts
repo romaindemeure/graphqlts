@@ -21,10 +21,10 @@ class UserController {
     return user;
   };
 
-  static getUser = async (first_name: string) => {
-    console.log(first_name)
+  static getUserByEmail = async (email: string) => {
+    console.log(email)
     let user = await db.manager.findOneBy(User, {
-      first_name: first_name
+      email: email
     })
     return user
   };
