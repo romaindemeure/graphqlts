@@ -27,3 +27,13 @@ export default `
     updateUserById(_id: String, input: UserInput): User
   }
 `
+
+
+// mutation {
+//   createUser(input: {
+//     first_name: "test"
+//     last_name: "test"
+//     email: "test@mail.com"
+//     description: "I'm a test"
+//   })
+// }

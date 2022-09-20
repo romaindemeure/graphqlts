@@ -3,9 +3,10 @@ import db from '../config/config';
 import { User } from '../entity/User';
 import { v4 as uuidv4 } from 'uuid';
 import myDataSource from '../config/config';
+import { ObjectID } from 'typeorm';
 
 interface UserInput {
-  _id: string
+  _id: ObjectID
   email: string
   first_name: string
   last_name: string
@@ -18,11 +19,10 @@ class UserController {
 
   static createUser = async ({ input }: { input: UserInput }) => {
     const user = new User();
-    user._id = uuidv4();
-    user.email = input.email;
-    user.first_name = input.first_name;
-    user.last_name = input.last_name;
-    user.description = input.description;
+    user.email = input.email.toLocaleLowerCase();
+    user.first_name = input.first_name.toLocaleLowerCase();
+    user.last_name = input.last_name.toLocaleLowerCase();
+    user.description = input.description.toLocaleLowerCase();
     user.created_at = Date.now().toString()
     user.updated_at = Date.now().toString()
     await create()
@@ -34,30 +34,31 @@ class UserController {
     let user = await db.manager.findOneBy(User, {
       email: email
     })
-    return user
+    return user;
   };
 
-  static getUserById = async (_id: string) => {
+  static getUserById = async (_id: ObjectID) => {
     let user = await db.manager.findOneBy(User, {
       _id: _id
     })
-    return user
+    return user;
   }
 
-  static deleteUserById = async (_id: string) => {
+  static deleteUserById = async (_id: ObjectID) => {
     await myDataSource.getMongoRepository(User).deleteOne({
       _id: { $eq: _id },
     })
   }
 
   static deleteUserByEmail = async (email: string) => {
-    await myDataSource.getMongoRepository(User).deleteOne({
+    let user = await myDataSource.getMongoRepository(User).deleteOne({
       email: { $eq: email },
     })
+    return user
   }
 
-  static updateUserById = async (_id: string, { input }: { input: UserInput }) => {
-    await myDataSource.getMongoRepository(User).updateMany({'_id': _id}, 
+  static updateUserById = async (_id: ObjectID, { input }: { input: UserInput }) => {
+    let user = await myDataSource.getMongoRepository(User).updateOne({'_id': _id}, 
     {
       'first_name': input.first_name,
       'last_name': input.last_name,
@@ -65,7 +66,12 @@ class UserController {
       'description': input.description,
       'update_at': Date.now().toString()
     })
+    return user;
+  }
 
+  static getUsers = async() => {
+    let users = await myDataSource.getMongoRepository(User).find();
+    return users;
   }
   
 }
