@@ -11,20 +11,13 @@ export default `
   }
 
   type User {
-    _id: String
+    id: String
     first_name: String
     last_name: String
     email: String
     description: String
     created_at: String
     updated_at: String
-  }
-
-  type Mutation {
-    createUser(input: UserInput): User
-    deleteUserById(_id: String): User
-    deleteUserByEmail(email: String): User
-    updateUserById(_id: String, input: UserInput): User
   }
 `
 

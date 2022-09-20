@@ -1,4 +1,13 @@
+import { ObjectID } from "typeorm";
 import UserController from "../controller/UserController";
+
+interface UserInput {
+  id: ObjectID
+  email: string
+  first_name: string
+  last_name: string
+  description: string
+}
 
 const root = {
   // getUser: ({ id }: { id: string }) => {
@@ -33,11 +42,11 @@ const root = {
     return value
   },
   getUserById: async (obj) => { // obj.id => ID de l'user
-    let value = UserController.getUserById(obj._id); 
+    let value = UserController.getUserById(obj.id); 
     return value
   },
   deleteUserById: async(obj) => {
-    let value = UserController.deleteUserById(obj._id);
+    let value = UserController.deleteUserById(obj.id);
     return value
   },
   deleteUserByEmail: async(obj) => {
@@ -45,7 +54,7 @@ const root = {
     return value
   },
   updateUserById: async (obj, args) => {
-    let value = UserController.updateUserById(obj._id, args);
+    let value = UserController.updateUserById(obj.id, args);
     return value
   },
   getUsers: async () => {

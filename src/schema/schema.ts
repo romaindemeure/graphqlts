@@ -5,9 +5,16 @@ import User from './schemaUsers'
 // GraphQL creation of schema for my endpoint API
 var Endpoints = `
   type Query {
-    getUserById(_id: String): User
+    getUserById(id: String): User
     getUserByEmail(email: String): User
     getUsers: [User]
+  }
+
+  type Mutation {
+    createUser(input: UserInput): User
+    deleteUserById(id: String): User
+    deleteUserByEmail(email: String): User
+    updateUserById(id: String, input: UserInput): User
   }
 `;
 

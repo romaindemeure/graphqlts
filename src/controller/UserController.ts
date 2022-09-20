@@ -3,10 +3,10 @@ import db from '../config/config';
 import { User } from '../entity/User';
 import { v4 as uuidv4 } from 'uuid';
 import myDataSource from '../config/config';
-import { ObjectID } from 'typeorm';
+// import { ObjectID } from 'typeorm';
+import { ObjectID } from 'mongodb';
 
 interface UserInput {
-  _id: ObjectID
   email: string
   first_name: string
   last_name: string
@@ -37,16 +37,14 @@ class UserController {
     return user;
   };
 
-  static getUserById = async (_id: ObjectID) => {
-    let user = await db.manager.findOneBy(User, {
-      _id: _id
-    })
+  static getUserById = async (id: ObjectID) => {
+    let user = await db.manager.findOneBy(User, new ObjectID(id))
     return user;
   }
 
-  static deleteUserById = async (_id: ObjectID) => {
+  static deleteUserById = async (id: ObjectID) => {
     await myDataSource.getMongoRepository(User).deleteOne({
-      _id: { $eq: _id },
+      id: { $eq: id },
     })
   }
 
@@ -57,8 +55,8 @@ class UserController {
     return user
   }
 
-  static updateUserById = async (_id: ObjectID, { input }: { input: UserInput }) => {
-    let user = await myDataSource.getMongoRepository(User).updateOne({'_id': _id}, 
+  static updateUserById = async (id: ObjectID, { input }: { input: UserInput }) => {
+    let user = await myDataSource.getMongoRepository(User).updateOne({'id': id}, 
     {
       'first_name': input.first_name,
       'last_name': input.last_name,
