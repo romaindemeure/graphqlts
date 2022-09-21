@@ -17,6 +17,7 @@ class UserController {
   // https://www.npmjs.com/package/object-mapper
 
   static createUser = async ({ input }: { input: UserInput }) => {
+
     const user = new User();
     user.email = input.email.toLocaleLowerCase();
     user.first_name = input.first_name.toLocaleLowerCase();
@@ -24,9 +25,10 @@ class UserController {
     user.description = input.description.toLocaleLowerCase();
     user.created_at = Date.now().toString()
     user.updated_at = Date.now().toString()
-    await create()
+
     db.manager.save(user)
-    return user;
+    
+    return UserController.getUserByEmail(input.email);
   };
 
   static getUserByEmail = async (email: string) => {
@@ -51,11 +53,10 @@ class UserController {
     let user = await myDataSource.getMongoRepository(User).deleteOne({
       email: { $eq: email },
     })
-    return user;
   };
 
   static updateUserByEmail = async (email: string, input) => {
-    console.log(input);
+
     input.updated_at = Date.now().toString()
 
     for (const key in input) {
@@ -63,6 +64,7 @@ class UserController {
         input[key] = input[key].toLocaleLowerCase();
       }
     }
+
     let user = await myDataSource.getMongoRepository(User).update({
         "email": email
     }, input);
