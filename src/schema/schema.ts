@@ -14,7 +14,7 @@ var Endpoints = `
     createUser(input: UserInput): User
     deleteUserById(id: String): User
     deleteUserByEmail(email: String): User
-    updateUserById(id: String, input: UserInput): User
+    updateUserByEmail(email: String, input: UserInput): User
   }
 `;
 

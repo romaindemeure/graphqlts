@@ -1,5 +1,6 @@
 import { Entity, Column, ObjectIdColumn, ObjectID } from "typeorm"
 
+// This is the ORM for how sort and create the database
 @Entity()
 export class User {
 
