@@ -66,7 +66,9 @@ class UserController {
     let user = await myDataSource.getMongoRepository(User).update({
         "email": email
     }, input);
-    return user;
+    
+    return UserController.getUserByEmail(email);
+    // return user;
   };
 
   static getUsers = async () => {
