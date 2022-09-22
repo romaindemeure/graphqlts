@@ -10,7 +10,7 @@ interface UserInput {
 }
 
 const root = {
-  
+
   createUser: async (obj) => {
     let value = UserController.createUser(obj);
     return value
@@ -38,6 +38,11 @@ const root = {
 
   updateUserByEmail: async (obj) => {
     let value = UserController.updateUserByEmail(obj.email, obj.input);
+    return value
+  },
+
+  updateUserById: async (obj) => {
+    let value = UserController.updateUserById(obj.id, obj.input);
     return value
   },
 
