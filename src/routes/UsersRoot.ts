@@ -1,14 +1,6 @@
 import { ObjectID } from "typeorm";
 import UserController from "../controller/UserController";
 
-interface UserInput {
-  id: ObjectID
-  email: string
-  first_name: string
-  last_name: string
-  description: string
-}
-
 const root = {
 
   createUser: async (obj) => {
