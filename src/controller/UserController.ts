@@ -2,7 +2,6 @@ import { create } from 'domain';
 import db from '../config/config';
 import { User } from '../entity/User';
 import { v4 as uuidv4 } from 'uuid';
-import myDataSource from '../config/config';
 import { ObjectID } from 'mongodb';
 
 interface UserInput {
@@ -55,7 +54,7 @@ class UserController {
 
   // DELETE USER BY EMAIL
   static deleteUserByEmail = async (email: string) => {
-    let user = await myDataSource.getMongoRepository(User).deleteOne({
+    let user = await db.getMongoRepository(User).deleteOne({
       email: { $eq: email },
     })
   };
@@ -72,7 +71,7 @@ class UserController {
       }
     }
 
-    let user = await myDataSource.getMongoRepository(User).update({
+    let user = await db.getMongoRepository(User).update({
         "email": email
     }, input);
     
@@ -93,7 +92,7 @@ class UserController {
       }
     }
 
-    let user = await myDataSource.getMongoRepository(User).update({
+    let user = await db.getMongoRepository(User).update({
         "id": convertID
     }, input);
     
@@ -103,7 +102,7 @@ class UserController {
 
   // GET ALL USERS
   static getUsers = async () => {
-    let users = await myDataSource.getMongoRepository(User).find();
+    let users = await db.getMongoRepository(User).find();
     return users;
   };
   
