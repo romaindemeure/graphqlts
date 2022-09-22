@@ -1,7 +1,5 @@
-import { create } from 'domain';
 import db from '../config/config';
 import { User } from '../entity/User';
-import { v4 as uuidv4 } from 'uuid';
 import { ObjectID } from 'mongodb';
 
 interface UserInput {
