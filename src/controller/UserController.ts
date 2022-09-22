@@ -23,7 +23,7 @@ class UserController {
     user.email = input.email.toLocaleLowerCase();
     user.first_name = input.first_name.toLocaleLowerCase();
     user.last_name = input.last_name.toLocaleLowerCase();
-    user.description = input.description.toLocaleLowerCase();
+    user.description = input.description;
     user.created_at = Date.now().toString();
     user.updated_at = Date.now().toString();
 
@@ -66,6 +66,7 @@ class UserController {
     input.updated_at = Date.now().toString();
 
     for (const key in input) {
+      console.log(input)
       if (Object.prototype.hasOwnProperty.call(input, key)) {
         input[key] = input[key].toLocaleLowerCase();
       }

@@ -8,7 +8,10 @@ const myDataSource = new DataSource({
     database: "graphqlts", 
     username: "backend",
     password: "backend",
-    entities: [User]
+    entities: [User],
+    migrations: ["migration/*.ts"],
+    synchronize: true,
+    logging: false,
 })
 
 export default myDataSource

@@ -7,21 +7,21 @@ export class User {
     @ObjectIdColumn()
     id: ObjectID;
 
-    @Column({type: String})
+    @Column({type: "string"})
     first_name: string
 
-    @Column({type: String})
+    @Column({type: "string"})
     last_name: string
 
     @Column({ unique: true})
     email: string
 
-    @Column({type: String})
+    @Column({type: "string"})
     description: string
 
-    @Column({type: String})
+    @Column({type: "string"})
     created_at: string
 
-    @Column({type: String})
+    @Column({type: "string"})
     updated_at: string
 }
