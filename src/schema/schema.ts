@@ -8,6 +8,7 @@ var Endpoints = `
     getUserById(id: String): User
     getUserByEmail(email: String): User
     getUsers: [User]
+    login(email: String, password: String): User 
   }
 
   type Mutation {

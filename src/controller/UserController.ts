@@ -27,11 +27,8 @@ class UserController {
     user.description = input.description;
 
     try {
-      let text = input.password;
       let salt = await bcrypt.genSalt(10);
-      let hash = await bcrypt.hash(text, salt);
-      
-      user.password = hash;
+      user.password = await bcrypt.hash(input.password, salt);;
       } catch (error) {
         console.log(error.message)
     }
@@ -120,10 +117,25 @@ class UserController {
     return users;
   };
 
-  static login = async (email: string) => {
-    const username = this.getUserByEmail(email);
+  static login = async (email: string, password: string) => {
+    let user = await db.manager.findOneBy(User, {
+      email: email
+    })
 
-    console.log(username);
+    if (user && (await bcrypt.compare(password, user.password))) {
+      // Create token
+      const token = jwt.sign(
+        { user_id: user.id, email },
+          process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
+
+      // save user token
+      user.jwt = token;
+      
+    }
   }
 };
 
