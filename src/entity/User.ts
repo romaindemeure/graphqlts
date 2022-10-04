@@ -20,6 +20,9 @@ export class User {
     description: string
 
     @Column({type: "string"})
+    password: string
+
+    @Column({type: "string"})
     created_at: string
 
     @Column({type: "string"})

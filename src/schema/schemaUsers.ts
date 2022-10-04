@@ -4,10 +4,11 @@
 // Mutation it's for create user with input return UserInput and all return User
 export default `
   input UserInput {
+    email: String
     first_name: String
     last_name: String
-    email: String
     description: String
+    password: String
   }
 
   type User {
