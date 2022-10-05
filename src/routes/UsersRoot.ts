@@ -41,6 +41,11 @@ const root = {
   getUsers: async () => {
     let value = UserController.getUsers()
     return value
+  },
+
+  login: async (obj) => {
+    let value = UserController.login(obj.email, obj.password)
+    return value
   }
 
 };

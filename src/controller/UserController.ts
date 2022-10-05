@@ -4,6 +4,9 @@ import { ObjectID } from 'mongodb';
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 interface UserInput {
   email: string
@@ -33,7 +36,6 @@ class UserController {
         console.log(error.message)
     }
   
-
     user.created_at = Date.now().toString();
     user.updated_at = Date.now().toString();
 
@@ -118,23 +120,13 @@ class UserController {
   };
 
   static login = async (email: string, password: string) => {
+
     let user = await db.manager.findOneBy(User, {
       email: email
     })
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      // Create token
-      const token = jwt.sign(
-        { user_id: user.id, email },
-          process.env.TOKEN_KEY,
-        {
-          expiresIn: "2h",
-        }
-      );
-
-      // save user token
-      user.jwt = token;
-      
+      return user
     }
   }
 };
