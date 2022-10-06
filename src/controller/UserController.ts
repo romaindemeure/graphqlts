@@ -4,6 +4,7 @@ import { ObjectID } from 'mongodb';
 
 const bcrypt = require("bcryptjs");
 const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 
 dotenv.config();
 
@@ -122,25 +123,40 @@ class UserController {
   static login = async (email: string, password: string) => {
 
     let header = {
-      "alg": "HS256",
-      "typ": "JWT"
+      algorithm: "HS256",
+      type: "JWT"
     };
 
+    let key = process.env.ACCES_TOKEN_SECRET;
 
-    let user = await db.manager.findOneBy(User, {
-      email: email
-    })
+    // let user = await db.manager.findOneBy(User, {
+    //   email: email
+    // })
+
+    let user = {
+      id: '633ee54082a573144c347445',
+      first_name: 'romain',
+      last_name: 'demeure',
+      email: 'rdemeure@satelliz.com',
+      description: "J'apprend la programmation",
+      password: '$2a$10$GP6L4X807mlrNtEFgf9I8O.vHrTcazQrCzFLxkrefeXKTB.0N6a.u',
+      created_at: '1665066304591',
+      updated_at: '1665066304591'
+    }
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const jwt = require('jsonwebtoken');
+  
+      // console.log(header);
+      // console.log(key);
 
-      let key = process.env.ACCES_TOKEN_SECRET;
-
-      let token = jwt.sign({ foo: 'bar' }, key, { algorithm: 'RS256' });
-
-      user.jwt = token
+      let token = jwt.sign(user, key, header);
 
       console.log(token)
+
+      // user.jwt = token
+
+      // console.log(user.jwt)
+
       
       return user
     }
