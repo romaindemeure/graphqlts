@@ -2,7 +2,6 @@ import db from '../config/config';
 import { User } from '../entity/User';
 import { ObjectID } from 'mongodb';
 
-const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
 const dotenv = require('dotenv');
 
@@ -133,11 +132,16 @@ class UserController {
     })
 
     if (user && (await bcrypt.compare(password, user.password))) {
+      const jwt = require('jsonwebtoken');
 
-      let key = process.env.TOKEN_SECRET;
-      console.log(key)
-      user.jwt = jwt.sign(user, key);
-      console.log(user.jwt);
+      let key = process.env.ACCES_TOKEN_SECRET;
+
+      let token = jwt.sign({ foo: 'bar' }, key, { algorithm: 'RS256' });
+
+      user.jwt = token
+
+      console.log(token)
+      
       return user
     }
   }
