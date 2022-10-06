@@ -118,14 +118,26 @@ class UserController {
     let users = await db.getMongoRepository(User).find();
     return users;
   };
-
+  
+  // LOGIN
   static login = async (email: string, password: string) => {
+
+    let header = {
+      "alg": "HS256",
+      "typ": "JWT"
+    };
+
 
     let user = await db.manager.findOneBy(User, {
       email: email
     })
 
     if (user && (await bcrypt.compare(password, user.password))) {
+
+      let key = process.env.TOKEN_SECRET;
+      console.log(key)
+      user.jwt = jwt.sign(user, key);
+      console.log(user.jwt);
       return user
     }
   }

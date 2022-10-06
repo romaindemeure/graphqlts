@@ -27,6 +27,6 @@ export class User {
 
     @Column({type: "string"})
     updated_at: string
-
+    
     jwt: string
 }
