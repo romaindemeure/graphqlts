@@ -129,20 +129,20 @@ class UserController {
 
     let key = process.env.ACCES_TOKEN_SECRET;
 
-    // let user = await db.manager.findOneBy(User, {
-    //   email: email
-    // })
+    let user = await db.manager.findOneBy(User, {
+      email: email
+    })
 
-    let user = {
-      id: '633ee54082a573144c347445',
-      first_name: 'romain',
-      last_name: 'demeure',
-      email: 'rdemeure@satelliz.com',
-      description: "J'apprend la programmation",
-      password: '$2a$10$GP6L4X807mlrNtEFgf9I8O.vHrTcazQrCzFLxkrefeXKTB.0N6a.u',
-      created_at: '1665066304591',
-      updated_at: '1665066304591'
-    }
+    // let user = {
+    //   id: '633ee54082a573144c347445',
+    //   first_name: 'romain',
+    //   last_name: 'demeure',
+    //   email: 'rdemeure@satelliz.com',
+    //   description: "J'apprend la programmation",
+    //   password: '$2a$10$GP6L4X807mlrNtEFgf9I8O.vHrTcazQrCzFLxkrefeXKTB.0N6a.u',
+    //   created_at: '1665066304591',
+    //   updated_at: '1665066304591'
+    // }
 
     if (user && (await bcrypt.compare(password, user.password))) {
   
